@@ -14,12 +14,15 @@ import {
 import "./Men.css";
 import Product from "../components/Product";
 import SelectedButton from "../components/SelectedButton";
+import Axios from "axios";
+import { config } from "../../config";
 
 class Woman extends Component {
   state = {
     sortSelect: "popular",
     liked: false,
-    addToCart: false
+    addToCart: false,
+    shoes: []
   };
   render() {
     return (
@@ -107,11 +110,12 @@ class Woman extends Component {
               </Grid>
             </Card>
             <GridList cellHeight={300} spacing={20} cols={3}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 1, 1, 11].map(title => (
+              {this.state.shoes && this.state.shoes.map(shoe => (
                 <GridListTile>
                   <Product
-                    title={title}
-                    image={require("../images/detail-white-2.jpg")}
+                    title={shoe.name}
+                    price={shoe.price}
+                    image={(shoe.images) ? `${config.url}/${shoe.images[0]}` : require("../images/detail-white-2.jpg")}
                   />
                 </GridListTile>
               ))}
@@ -130,7 +134,12 @@ class Woman extends Component {
     );
   }
 
-  handleShowMore() {}
+  async componentDidMount() {
+    const { data } = await Axios.get(`/shoes?kind=women`);
+    this.setState({ shoes: data })
+  }
+
+  handleShowMore() { }
   handleOnChangeSelectSort(event) {
     this.setState({ sortSelect: event.target.value });
   }

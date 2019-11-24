@@ -26,12 +26,12 @@ class Product extends Component {
               icon={faHeart}
             />
           </IconButton>
-          <p style={{ fontSize: 17 }}>{this.props.title}</p>
+          <p style={{ fontSize: 17 }}>{1}</p>
         </Grid>
         <img src={this.props.image} alt="shoe" style={{ height: 250 }} />
         <GridListTileBar
-          title={"Name"}
-          subtitle={"Cost"}
+          title={this.props.title}
+          subtitle={this.props.price}
           actionIcon={
             <IconButton
               className="icon-size"

@@ -15,12 +15,16 @@ import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import Product from "../components/Product";
 
 import "./Men.css";
+import axios from "axios";
+import { config } from "../../config";
+import utils from "../../utils";
 
 class Men extends Component {
   state = {
     sortSelect: "popular",
     liked: false,
-    addToCart: false
+    addToCart: false,
+    shoes: []
   };
   render() {
     return (
@@ -120,14 +124,18 @@ class Men extends Component {
               </Grid>
             </Card>
             <GridList cellHeight={300} spacing={20} cols={3}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 1, 1, 11].map(title => (
-                <GridListTile>
-                  <Product
-                    title={title}
-                    image={require("../images/detail-white-2.jpg")}
-                  />
-                </GridListTile>
-              ))}
+              {this.state.shoes && this.state.shoes.map(shoe => {
+                console.log(`${config.url}/${shoe.images}`)
+                return (
+                  <GridListTile>
+                    <Product
+                      title={shoe.name}
+                      price={utils.toVND(shoe.price)}
+                      image={(shoe.images) ? `${config.url}/${shoe.images[0]}` : require("../images/detail-white-2.jpg")}
+                    />
+                  </GridListTile>
+                )
+              })}
             </GridList>
             <div style={{ padding: 10, marginTop: 10 }}>
               <Button
@@ -143,7 +151,11 @@ class Men extends Component {
     );
   }
 
-  handleShowMore() {}
+  async componentDidMount() {
+    const { data } = await axios.get(`/shoes?kind=men`);
+    this.setState({ shoes: data })
+  }
+  handleShowMore() { }
   handleOnChangeSelectSort(event) {
     this.setState({ sortSelect: event.target.value });
   }

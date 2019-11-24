@@ -11,7 +11,7 @@ class Login extends Component {
   state = {
     isShowPassword: false,
     email: "thantoandoc83@gmail.com",
-    password: "123456"
+    password: "4566789"
   };
   height = 0;
   constructor(props) {

@@ -12,6 +12,8 @@ import Notification from "./user_interface/containers/Notification";
 import DetailsProduct from "./user_interface/containers/Details";
 import Footer from "./user_interface/components/Footer";
 import SearchResult from "./user_interface/components/SearchResult";
+import './config';
+
 function App() {
   return (
     <div className="App">
