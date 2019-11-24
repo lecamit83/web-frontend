@@ -1,0 +1,139 @@
+import React, { Component } from "react";
+import {
+  Grid,
+  Card,
+  GridList,
+  Select,
+  MenuItem,
+  Checkbox,
+  FormControlLabel,
+  Button,
+  GridListTile
+} from "@material-ui/core";
+
+import "./Men.css";
+import Product from "../components/Product";
+import SelectedButton from "../components/SelectedButton";
+
+class Woman extends Component {
+  state = {
+    sortSelect: "popular",
+    liked: false,
+    addToCart: false
+  };
+  render() {
+    return (
+      <div className="men-container">
+        <Grid container className="center">
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold", fontSize: 25 }}>Giày nữ</p>
+            <Card style={{ padding: 26 }}>Bộ lọc kết quả</Card>
+            <Card style={{ marginTop: 30 }}>
+              <Card style={{ padding: 10 }}>Theo giá</Card>
+              <Grid container className="center-select">
+                {[
+                  "Nhỏ hơn 100.000 VNĐ",
+                  "Nhỏ hơn 300.000 VNĐ",
+                  "Nhỏ hơn 400.000 VNĐ",
+                  "Nhỏ hơn 500.000 VNĐ",
+                  "Lớn hơn 500.000 VNĐ"
+                ].map(title => (
+                  <Grid>
+                    <FormControlLabel
+                      control={<Checkbox value="popular" />}
+                      label={title}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Card>
+            <Card style={{ marginTop: 30 }}>
+              <Card style={{ padding: 10 }}>Theo màu sắc</Card>
+              <Grid container>
+                {["Màu trắng", "Màu xanh", "Màu đỏ", "Màu vàng"].map(title => (
+                  <Grid container className="center-select">
+                    <FormControlLabel
+                      control={<Checkbox value="popular" />}
+                      label={title}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Card>
+            <Card style={{ marginTop: 30 }}>
+              <Card style={{ padding: 10 }}>Theo kích cỡ</Card>
+              <Grid container className="center-select">
+                {["20", "30", "40"].map(title => (
+                  <Grid>
+                    <FormControlLabel
+                      control={<Checkbox value="popular" />}
+                      label={title}
+                    />
+                    <br />
+                  </Grid>
+                ))}
+              </Grid>
+            </Card>
+          </Grid>
+          <Grid item xs={9} style={{ marginLeft: 10 }}>
+            <Card style={{ padding: 20 }}>
+              <Grid container style={{ width: 300, fontSize: 18 }}>
+                Lựa chọn của bạn:
+                <Grid container direction="row">
+                  {["Màu đỏ", "Nhỏ hơn 100.000"].map(item => (
+                    <SelectedButton
+                      itemTitle={item}
+                      onClick={() => {
+                        console.log("1");
+                      }}
+                    />
+                  ))}
+                </Grid>
+              </Grid>
+              <Grid container className="header-sort">
+                <Grid item>
+                  Sắp xếp theo:{" "}
+                  <Select
+                    value={this.state.sortSelect}
+                    style={{ marginLeft: 10, width: 160, fontSize: 15 }}
+                    onChange={this.handleOnChangeSelectSort.bind(this)}
+                  >
+                    <MenuItem value="newest">Mới nhất</MenuItem>
+                    <MenuItem value="popular">Phổ biến</MenuItem>
+                    <MenuItem value="high-to-low">Giá từ cao đến thấp</MenuItem>
+                    <MenuItem value="low-to-high">Giá từ thấp đến cao</MenuItem>
+                  </Select>
+                </Grid>
+              </Grid>
+            </Card>
+            <GridList cellHeight={300} spacing={20} cols={3}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 1, 1, 11].map(title => (
+                <GridListTile>
+                  <Product
+                    title={title}
+                    image={require("../images/detail-white-2.jpg")}
+                  />
+                </GridListTile>
+              ))}
+            </GridList>
+            <div style={{ padding: 10, marginTop: 10 }}>
+              <Button
+                style={{ textTransform: "none", fontSize: 16, color: "blue" }}
+                onClick={this.handleShowMore.bind(this)}
+              >
+                Xem thêm ...
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+
+  handleShowMore() {}
+  handleOnChangeSelectSort(event) {
+    this.setState({ sortSelect: event.target.value });
+  }
+}
+
+export default Woman;
